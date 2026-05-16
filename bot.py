@@ -20,8 +20,8 @@ from telegram.ext import (
     CallbackQueryHandler, ConversationHandler,
     filters, ContextTypes
 )
-import psycopg2
-from psycopg2.extras import RealDictCursor
+import psycopg
+from psycopg.rows import dict_row
 
 # =====================================================
 #  إعدادات — ضع بياناتك هنا
@@ -49,7 +49,10 @@ log = logging.getLogger(__name__)
 #  قاعدة البيانات
 # =====================================================
 def db():
-    return psycopg2.connect(DB_URL, cursor_factory=RealDictCursor)
+    return psycopg.connect(
+        DB_URL,
+        row_factory=dict_row
+    )
 
 
 def init_db():
